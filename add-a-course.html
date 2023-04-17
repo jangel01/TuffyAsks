@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a Course</title>
+
+    <link rel="stylesheet" href="main.css">
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body class="bg-primary-bg">
+
+    <div class="container-fluid px-0">
+        <header class="d-flex flex-wrap justify-content-center py-3 px-4 border-bottom bg-primary">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <img class="bi me-2" width="40" height="32" src="images/Tufffy-logo.png" />
+                <span class="fs-4 text-light">TuffyAsks</span>
+            </a>
+
+            <div class="col-md-3 text-end">
+                <button type="button" class="btn btn-secondary me-2">Sign Out</button>
+            </div>
+        </header>
+    </div>
+
+    <h3 class="text-center mt-3 fw-bold">Add a Course</h3>
+
+    <div class="container">
+        <form novalidate>
+            <div class="mt-3 mb-3">
+                <label for="exampleInputEmail1" class="form-label mb-0 fw-bold">Course Prefix and Number</label>
+                <div id="emailHelp" class="form-text mt-0 mb-1">e.g CPSC 411</div>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+            </div>
+            <div class="mt-3 mb-3">
+                <label for="exampleInputEmail1" class="form-label mb-0 fw-bold">Course Title</label>
+                <div id="emailHelp" class="form-text mt-0 mb-1">e.g Mobile Device Application Programming</div>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+            </div>
+            <div class="mt-3 mb-4">
+                <label for="exampleFormControlTextarea1" class="fw-bold mb-1">Course Description</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <footer class="fixed-bottom bg-primary">
+            <p class="text-center text-light my-3">&copy; 2023 TuffyAsks, Inc</p>
+        </footer>
+    </div>
+</body>
+
+</html>

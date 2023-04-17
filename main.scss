@@ -1,0 +1,12 @@
+
+$theme-colors: (
+    "primary": #00274c,
+    "secondary": #eb7500,
+    "primary-bg": #f5f5f5,
+    "light": #ffffff,
+    "danger": red,
+    "dark": black
+);
+
+// include all of boostrap
+@import "node_modules/bootstrap/scss/bootstrap";
