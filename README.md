@@ -1,6 +1,7 @@
 Install packages (see package.json for reference)
 
 ```npm install```
+
 See if you have the packages installed:
 
 ```npm list```
