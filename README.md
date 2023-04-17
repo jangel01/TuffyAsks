@@ -22,7 +22,7 @@ Tutorial for MySQL installation: https://www.youtube.com/watch?v=u96rVINbAUI
 
 -HTML CSS Support
 
-For live Saas Compiler, you will want to change the output css file to go to the public directory:
+For live Saas Compiler, you will want to change the output css file to go to the public css directory:
 https://www.youtube.com/watch?v=V9QvH51XZVM&t=173s Once done you can click watch saas located in the blue footer bar
 
 
