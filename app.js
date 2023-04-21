@@ -37,7 +37,7 @@ app.use(session({
 
 function requireLogin(req, res, next) {
     if (req.session && req.session.user) {
-        // User is authenticated, so we can proceed
+        // User is authenticated, so we proceed to the next middleware or route handler function
         next();
     } else {
         // User is not authenticated, so we redirect them to the login page
@@ -47,49 +47,79 @@ function requireLogin(req, res, next) {
 
 function redirectLoggedIn(req, res, next) {
     if (req.session && req.session.user) {
-        // User is already logged in, so we redirect them to a different page
-        res.redirect('h');
+        // User is already logged in, so we redirect them to home page
+        res.redirect('/');
     } else {
         // User is not logged in, so we proceed to the next middleware or route handler function
         next();
     }
 }
 
+
+app.get('/register', redirectLoggedIn, (req, res) => {
+    const errorMessage = req.query.error;
+    res.render('register', { errorMessage });
+});
+
+
+app.get('/login', redirectLoggedIn, (req, res) => {
+    const errorMessage = req.query.error;
+    res.render('login', { errorMessage });
+});
+
+app.get('/add-a-course', requireLogin, (req, res) => {
+    const errorMessage = req.query.error;
+    res.render('add-a-course', { errorMessage });
+})
+
+
+app.get(['/', '/index'], requireLogin, (req, res) => {
+    const name = req.session.user.username
+    const errorMessage = req.query.error;
+    res.render('index', { errorMessage, name });
+});
+
 app.post('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) {
-            console.error('Eerror destroying session:', err);
+            console.error('Error destroying session:', err);
         }
-        console.log("Logout successful")
-        res.redirect('/login');
+        console.log("Logout successful");
+        res.redirect('login');
     });
 });
 
+app.post(['/', '/index'], requireLogin, (req, res) => {
+    const { search_course } = req.body;
+    // Replace space with dash
+    const search_course_dash = search_course.trim().replace(/\s+/g, '-');
 
-app.get('/register', redirectLoggedIn, (req, res) => {
-    res.render('register');
-});
+    const query = `SELECT * FROM courses WHERE course_id = ?`;
+    conn.query(query, [search_course_dash], (err, results) => {
+        if (err) {
+            console.error('Error querying database:', err);
+            res.status(500).send('Internal server error');
+        } else if (results.length === 0) {
+            let errorMessage = 'The specificed course does not exist. Try adding it.';
+            res.redirect(`index?error=${encodeURIComponent(errorMessage)}`);
+        } else {
+            res.redirect(`courses/${search_course_dash}`);
+        }
+    });
 
-app.get('/h', requireLogin, (req, res) => {
-    const name = req.session.user.username
-    res.render('h', { name });
-});
-
-app.get('/login', redirectLoggedIn, (req, res) => {
-    res.render('login');
 });
 
 app.post('/login', redirectLoggedIn, (req, res) => {
     const { username, password } = req.body;
 
     const query = `SELECT * FROM users WHERE username = ? AND password = ?`;
-
     conn.query(query, [username, password], (err, results) => {
         if (err) {
             console.error('Error querying database:', err);
             res.status(500).send('Internal server error');
         } else if (results.length === 0) {
-            res.render('login', { errorMessage: 'No matching user found with specificed credentials' });
+            let errorMessage = 'No matching user found with specificed credentials';
+            res.redirect(`login?error=${encodeURIComponent(errorMessage)}`);
         } else {
             const user = results[0];
             console.log('Matching user found:', user);
@@ -101,7 +131,7 @@ app.post('/login', redirectLoggedIn, (req, res) => {
                 email: user.email,
                 password: user.password
             };
-            res.redirect('h')
+            res.redirect('/');
         }
     });
 
@@ -120,9 +150,9 @@ app.post('/register', redirectLoggedIn, (req, res) => {
                 res.status(500).send('Internal server error');
             } else if (results.affectedRows === 0) {
                 // If no rows were affected, it means the email or username already exists in the database
-                res.render('register', { errorMessage: 'Email or username already exists' });
+                let errorMessage = 'Email or username already exists';
+                res.redirect(`register?error=${encodeURIComponent(errorMessage)}`);
             } else {
-                //res.send('Registration successful!');
                 res.redirect('login');
             }
         });
@@ -130,6 +160,61 @@ app.post('/register', redirectLoggedIn, (req, res) => {
         res.status(400).send('Invalid form data');
     }
 });
+
+app.post('/add-a-course', requireLogin, (req, res) => {
+    const { course_id, course_title, course_desc } = req.body;
+    // Replace space with dash
+    const course_id_dash = course_id.trim().replace(/\s+/g, '-');
+
+    // Try to insert the new course into the database
+    const query = 'INSERT INTO courses (course_id, course_title, course_desc) SELECT ?, ?, ? WHERE NOT EXISTS (SELECT * FROM courses WHERE course_id = ?)';
+    conn.query(query, [course_id_dash, course_title, course_desc, course_id_dash], (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Internal server error');
+        } else if (results.affectedRows === 0) {
+            // If no rows were affected, it means the course already exists in the database
+            let errorMessage = 'Sorry. That course already exists.';
+            res.redirect(`add-a-course?error=${encodeURIComponent(errorMessage)}`);
+        } else {
+            res.redirect(`courses/${course_id_dash}`)
+        }
+    });
+});
+
+
+app.get('/courses/:course_id', requireLogin, (req, res) => {
+    const courseId = req.params.course_id;
+    const courseId_no_dash = courseId.trim().replace(/-/g, ' ');
+
+    // Look up the course in the database by its course_id
+    const query = 'SELECT * FROM courses WHERE course_id = ?';
+    conn.query(query, courseId, (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Internal server error');
+        } else if (result.length === 0) {
+            res.status(404);
+            res.redirect('404-error');
+        } else {
+            // Render the course page template with the course data
+            const courseData = result[0];
+            const url = `/${courseData.course_id}`;
+            res.render('course', {
+                course_id: courseId_no_dash,
+                course_title: courseData.course_title,
+                course_desc: courseData.course_desc,
+                url
+            });
+        }
+    });
+});
+
+app.use((req, res) => {
+    res.status(404);
+
+    res.render('404-error');
+})
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

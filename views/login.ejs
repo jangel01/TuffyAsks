@@ -118,7 +118,7 @@
     const emailRegex = /^[a-zA-Z0-9._-]{3,}@((csu\.)?fullerton\.edu)$/;
 
     regForm.addEventListener('submit', (e) => {
-      if (!regForm.checkVisibility || !username.value || username.value == '' || !password.value || password.value.length == 0) {
+      if (!regForm.checkValidity()) {
         e.preventDefault();
       }
 
@@ -127,6 +127,7 @@
         username.classList.add("is-invalid");
         usernameLabel.textContent = "Please enter a valid username";
         usernameLabel.classList.add("text-danger");
+        e.preventDefault();
       } else {
         username.classList.remove("is-invalid");
         username.classList.add("is-valid");
@@ -139,6 +140,8 @@
         password.classList.add("is-invalid");
         passwordLabel.textContent = "Please enter a valid password";
         passwordLabel.classList.add("text-danger");
+        e.preventDefault();
+        
       } else {
         password.classList.remove("is-invalid");
         password.classList.add("is-valid");

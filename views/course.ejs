@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a Course</title>
+
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
+    <link rel="/css/boostrap.min.css">
+
+    <!--No favicon-->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+
+<body class="bg-primary-bg">
+
+    <div class="container-fluid px-0">
+        <header class="d-flex flex-wrap justify-content-center py-3 px-4 bg-primary">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <img class="bi me-2" width="40" height="32" src="/images/Tufffy-logo.png" />
+                <span class="fs-4 text-light">TuffyAsks</span>
+            </a>
+
+            <div class="col-md-3 text-end">
+                <!-- <button type="button" class="btn btn-secondary me-2">Sign Out</button> -->
+                <form action="/logout" method="POST">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button class="btn btn-secondary ne-2" type="submit">Log Out</button>
+                </form>
+            </div>
+        </header>
+    </div>
+
+    <div class="px-4 py-5 text-left bg-hero text-light" style="height:250px;">
+        <h1 class="display-5 fw-bold mb-4"> <span class="text-uppercase">
+                <%= locals.course_id %>
+            </span> - <%= locals.course_title %>
+        </h1>
+        <div class="col-10">
+            <p class="lead mb-4">
+                <%= locals.course_desc %>
+            </p>
+        </div>
+    </div>
+
+
+
+    <div class="container">
+        <footer class="fixed-bottom bg-primary">
+            <p class="text-center text-light my-3">&copy; 2023 TuffyAsks, Inc</p>
+        </footer>
+    </div>
+
+</body>
+
+</html>
