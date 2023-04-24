@@ -1,12 +1,12 @@
 # Prerequisites:
 
-> 1) Node: https://nodejs.org/en
+1) Node: https://nodejs.org/en
 
-> 2) MySQL server: https://dev.mysql.com/downloads/mysql/
+2) MySQL server: https://dev.mysql.com/downloads/mysql/
 
-> 3) MySQL workbench (other alternatives exist but this is the one I (Jason) used): https://dev.mysql.com/downloads/workbench/
+3) MySQL workbench (other alternatives exist but this is the one I (Jason) used): https://dev.mysql.com/downloads/workbench/
 
->> Tutorial for MySQL installation: https://www.youtube.com/watch?v=u96rVINbAUI
+  - Tutorial for MySQL installation: https://www.youtube.com/watch?v=u96rVINbAUI
 
 4) Make sure to have the same configuration for mysql local server: https://imgur.com/yFqNlj4 
 
