@@ -17,8 +17,8 @@
    - Windows: Search up Services and check the status of MySql.
 
    - Linux: 
-        - check status: ```systemctl status mysql.service``` 
-        - turn on server: ```sudo systemctl start mysql.service```
+        - check status: ```systemctl status mysql.service``` or ```sudo systemctl status mysql```
+        - turn on server: ```sudo systemctl start mysql.service``` or ```sudo systemctl start mysql```
 
 # Install packages (see package.json for reference)
 
