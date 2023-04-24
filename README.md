@@ -8,6 +8,18 @@ MySQL workbench (other alternatives exist but this is the one I (Jason) used): h
 
 Tutorial for MySQL installation: https://www.youtube.com/watch?v=u96rVINbAUI
 
+Make sure to have the same configuration for mysql local server: https://imgur.com/yFqNlj4 
+
+Make sure your server is running:
+
+Mac: Go to system preferences and click MySQL Wokrbench. You can then see if the server is running.
+
+Windows: Search up Services and check the status of MySql.
+
+Linux:
+check status: ```systemctl status mysql.service```
+turn on server: ```sudo systemctl start mysql.service```
+
 # Install packages (see package.json for reference)
 
 ```npm install```
@@ -16,11 +28,11 @@ Tutorial for MySQL installation: https://www.youtube.com/watch?v=u96rVINbAUI
 
 ```npm list```
 
-# You might need these VS code extensions for everything to work smoothly:
+# VS code extensions used:
 
--Live Saas Compiler 
+-Live Saas Compiler (for customizing bootstrap)
 
--HTML CSS Support
+-HTML CSS Support (helps with coding)
 
 For live Saas Compiler, you will want to change the output css file to go to the public css directory:
 https://www.youtube.com/watch?v=V9QvH51XZVM&t=173s Once done you can click watch saas located in the blue footer bar
