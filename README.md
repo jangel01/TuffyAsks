@@ -1,24 +1,24 @@
 # Prerequisites:
 
-Node: https://nodejs.org/en
+1) Node: https://nodejs.org/en
 
-MySQL server: https://dev.mysql.com/downloads/mysql/
+2) MySQL server: https://dev.mysql.com/downloads/mysql/
 
-MySQL workbench (other alternatives exist but this is the one I (Jason) used): https://dev.mysql.com/downloads/workbench/
+3) MySQL workbench (other alternatives exist but this is the one I (Jason) used): https://dev.mysql.com/downloads/workbench/
 
-Tutorial for MySQL installation: https://www.youtube.com/watch?v=u96rVINbAUI
+  Tutorial for MySQL installation: https://www.youtube.com/watch?v=u96rVINbAUI
 
-Make sure to have the same configuration for mysql local server: https://imgur.com/yFqNlj4 
+4) Make sure to have the same configuration for mysql local server: https://imgur.com/yFqNlj4 
 
-Make sure your server is running:
+5) Make sure your server is running:
 
-Mac: Go to system preferences and click MySQL Wokrbench. You can then see if the server is running.
+  Mac: Go to system preferences and click MySQL Wokrbench. You can then see if the server is running.
 
-Windows: Search up Services and check the status of MySql.
+  Windows: Search up Services and check the status of MySql.
 
-Linux:
-check status: ```systemctl status mysql.service```
-turn on server: ```sudo systemctl start mysql.service```
+  Linux: 
+    check status: ```systemctl status mysql.service```
+    turn on server: ```sudo systemctl start mysql.service```
 
 # Install packages (see package.json for reference)
 
@@ -36,7 +36,6 @@ turn on server: ```sudo systemctl start mysql.service```
 
 For live Saas Compiler, you will want to change the output css file to go to the public css directory:
 https://www.youtube.com/watch?v=V9QvH51XZVM&t=173s Once done you can click watch saas located in the blue footer bar
-
 
 # To run the server:
 
