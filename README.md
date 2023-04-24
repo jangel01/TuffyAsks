@@ -12,15 +12,11 @@
 
 5) Make sure your server is running:
 
-Mac: Go to system preferences and click MySQL Wokrbench. You can then see if the server is running.
+   - Mac: Go to system preferences and click MySQL Wokrbench. You can then see if the server is running.
 
-Windows: Search up Services and check the status of MySql.
+   - Windows: Search up Services and check the status of MySql.
 
-Linux: 
-
-check status: ```systemctl status mysql.service```
-
-turn on server: ```sudo systemctl start mysql.service```
+   - Linux: check status: ```systemctl status mysql.service``` turn on server: ```sudo systemctl start mysql.service```
 
 # Install packages (see package.json for reference)
 
