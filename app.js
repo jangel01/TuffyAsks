@@ -216,6 +216,7 @@ app.get('/courses/:course_id', requireLogin, (req, res) => {
                     res.render('course', {
                         course: result[0],
                         posts: result2,
+                        course_id_no_dash: courseId_no_dash
                     });
                 }
             });
@@ -291,6 +292,7 @@ app.get('/courses/:course_id/posts/:post_id', requireLogin, (req, res) => {
                     res.render('post', {
                         post_page: result[0],
                         replies: result2,
+                        course_id_no_dash: courseId_no_dash
                     });
                 }
             });
