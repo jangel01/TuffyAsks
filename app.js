@@ -211,11 +211,19 @@ app.get('/courses/:course_id', requireLogin, (req, res) => {
                     console.error(err);
                     res.status(500).send('Internal server error');
                 } else {
-                    console.log(result2)
+                    // Truncate post content longer than 200 characters
+                    const truncatedPosts = result2.map(post => {
+                        if (post.post_content.length > 200) {
+                            return { ...post, post_content: post.post_content.substring(0, 200) + '...' };
+                        } else {
+                            return post;
+                        }
+                    });
+
                     // Render the course page template with the course data
                     res.render('course', {
                         course: result[0],
-                        posts: result2,
+                        posts: truncatedPosts,
                         course_id_no_dash: courseId_no_dash
                     });
                 }
@@ -256,7 +264,7 @@ app.post('/courses/:course_id', requireLogin, (req, res) => {
 
 // create new reply for post page
 app.post('/courses/:course_id/posts/:post_id', requireLogin, (req, res) => {
-    const courseId = req.params.course_id;  
+    const courseId = req.params.course_id;
     const courseId_no_dash = courseId.trim().replace(/-/g, ' ');
     const postId = req.params.post_id;
     const op = req.session.user.username;

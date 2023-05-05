@@ -124,16 +124,16 @@
         <div class="col-11 mx-auto">
           <div class="card bg-primary text-white mb-3 py-3" style="height: 30vh;">
             <div class="card-body">
-              <h4 class="card-title fw-bold text-wrap" style="padding-right: 4rem;">
+              <h4 class="card-title fw-bold text-wrap" style="padding-right: 4rem; font-size:4vh;">
                 <%= post.post_title %>
               </h4>
               <p class="card-text"> Posted by <%= post.op %></p>
-              <h5 class="card-text text-wrap" style="padding-right: 4rem;">
+              <h5 class="card-text text-wrap" style="padding-right: 4rem; font-size:2vh;">
                 <!-- 70 words for preview-->
                 <%= post.post_content %>
               </h5>
 
-              <a href = "/courses/<%= course.course_id %>/posts/<%= post.id %>" class = "btn btn-secondary mb-0" style = "position: absolute; bottom: 1rem;">Reply </a>
+              <a href = "/courses/<%= course.course_id %>/posts/<%= post.id %>" class = "btn btn-secondary mb-0" style = "position: absolute; bottom: 1rem; font-size: 2vh;">Reply </a>
             </div>
           </div>
         </div>
