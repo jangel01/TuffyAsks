@@ -155,7 +155,7 @@
         });
 
         courseDescLabel.addEventListener('input', () => {
-            let words = course_desc.value.trim().split(/\s+/);
+            let words = courseDesc.value.trim().split(/\s+/);
 
             if (words[0] === '') {
                 wordCount.innerText = '';
@@ -167,7 +167,7 @@
                 wordCount.classList.remove("text-danger");
             }
 
-            localStorage.setItem('words', course_desc.value);
+            localStorage.setItem('words', courseDesc.value);
         });
 
         // Retrieve the word count from local storage on page load

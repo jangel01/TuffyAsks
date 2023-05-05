@@ -38,10 +38,10 @@
 
   <div class="container-fluid px-0">
     <div class="row">
-      <div class="col-12 bg-hero">
+      <div class="col-12 bg-hero" style = "min-height:15vh;">
         <div class="row">
           <div class="col-11 mx-auto">
-            <div class="px-4 py-5 text-left bg-hero text-light" style="height:250px;">
+            <div class="px-4 py-5 text-left bg-hero text-light">
               <h1 class="display-5 fw-bold mb-4"> <span class="text-uppercase">
                   <%= locals.course_id_no_dash %>
                 </span> - <%= locals.course.course_title %>
@@ -91,7 +91,7 @@
   </div>
 
   <% if (locals.posts.length===0) { %>
-  <div id="no-post">
+  <div id="no-post" style = "min-height:80vh;">
     <div class="container-fluid">
       <div class="row">
         <div class="col-5 mx-auto">
@@ -111,7 +111,7 @@
     </div>
   </div>
   <% } else { %>
-  <div id="posts">
+  <div id="posts" style = "min-height:80vh;">
     <!-- card that has title and description preview at the bottom -->
     <div class="container-fluid mt-5 mb-5">
       <div class="row">
@@ -124,10 +124,10 @@
         <div class="col-11 mx-auto">
           <div class="card bg-primary text-white mb-3 py-3" style="height: 30vh;">
             <div class="card-body">
-              <h4 class="card-title fw-bold text-wrap" style="padding-right: 4rem; font-size:4vh;">
+              <h4 class="card-title fw-bold text-wrap" style="padding-right: 4rem; font-size:3.5vh;">
                 <%= post.post_title %>
               </h4>
-              <p class="card-text"> Posted by <%= post.op %></p>
+              <p class="card-text" style = "font-size: 2vh;"> Posted by <%= post.op %></p>
               <h5 class="card-text text-wrap" style="padding-right: 4rem; font-size:2vh;">
                 <!-- 70 words for preview-->
                 <%= post.post_content %>
@@ -189,7 +189,7 @@
     const body = document.getElementById("post-body");
     const bodyErr = document.getElementById("post-body-error");
     const wordCount = document.getElementById('word-count');
-    const postTitleWordLimit = 40;
+    const postTitleWordLimit = 100;
     const bodyWordLimit = 500;
 
     postForm.addEventListener("submit", (e) => {
