@@ -238,12 +238,23 @@ app.post('/courses/:course_id', requireLogin, (req, res) => {
             console.error(err);
             res.status(500).send('Internal server error');
         } else {
-            res.redirect(req.originalUrl);
+            const query = 'SELECT LAST_INSERT_ID() as postId';
+
+            conn.query(query, (err, result) => {
+                if (err) {
+                    console.error(err);
+                    res.status(500).send('Internal server error');
+                } else {
+                    const postId = result[0].postId;
+                    const redirectUrl = `/courses/${courseId}/posts/${postId}`;
+                    res.redirect(redirectUrl);
+                }
+            });
         }
     });
 });
 
-// create new reply for course page
+// create new reply for post page
 app.post('/courses/:course_id/posts/:post_id', requireLogin, (req, res) => {
     const courseId = req.params.course_id;  
     const courseId_no_dash = courseId.trim().replace(/-/g, ' ');
