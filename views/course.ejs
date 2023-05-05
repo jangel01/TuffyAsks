@@ -2,56 +2,224 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add a Course</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add a Course</title>
 
-    <script src="/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="/css/main.css">
+  <script src="/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="/css/main.css">
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
-    <link rel="/css/boostrap.min.css">
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
+  <link rel="/css/boostrap.min.css">
 
-    <!--No favicon-->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  <!--No favicon-->
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 
 <body class="bg-primary-bg d-flex flex-column min-vh-100">
 
-    <div class="container-fluid px-0">
-        <header class="d-flex flex-wrap justify-content-center py-3 px-4 bg-primary">
-            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                <img class="bi me-2" width="40" height="32" src="/images/Tufffy-logo.png" />
-                <span class="fs-4 text-light">TuffyAsks</span>
-            </a>
+  <div class="container-fluid px-0">
+    <header class="d-flex flex-wrap justify-content-center py-3 px-4 bg-primary">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+        <img class="bi me-2" width="40" height="32" src="/images/Tufffy-logo.png" />
+        <span class="fs-4 text-light">TuffyAsks</span>
+      </a>
 
-            <div class="col-md-3 text-end">
-                <!-- <button type="button" class="btn btn-secondary me-2">Sign Out</button> -->
-                <form action="/logout" method="POST">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <button class="btn btn-secondary ne-2" type="submit">Log Out</button>
-                </form>
+      <div class="col-md-3 text-end">
+        <!-- <button type="button" class="btn btn-secondary me-2">Sign Out</button> -->
+        <form action="/logout" method="POST">
+          <input type="hidden" name="_method" value="DELETE">
+          <button class="btn btn-secondary ne-2" type="submit">Log Out</button>
+        </form>
+      </div>
+    </header>
+  </div>
+
+  <div class="container-fluid px-0">
+    <div class="row">
+      <div class="col-12 bg-hero">
+        <div class="row">
+          <div class="col-11 mx-auto">
+            <div class="px-4 py-5 text-left bg-hero text-light" style="height:250px;">
+              <h1 class="display-5 fw-bold mb-4"> <span class="text-uppercase">
+                  <%= locals.course.course_id %>
+                </span> - <%= locals.course.course_title %>
+              </h1>
+              <div>
+                <p class="lead mb-4">
+                  <%= locals.course.course_desc %>
+                </p>
+              </div>
             </div>
-        </header>
-    </div>
-
-    <div class="px-4 py-5 text-left bg-hero text-light" style="height:250px;">
-        <h1 class="display-5 fw-bold mb-4"> <span class="text-uppercase">
-                <%= locals.course_id %>
-            </span> - <%= locals.course_title %>
-        </h1>
-        <div class="col-10">
-            <p class="lead mb-4">
-                <%= locals.course_desc %>
-            </p>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 
-    <footer class=" bg-primary mt-auto">
-        <p class="text-center text-light my-0 py-3">&copy; 2023 TuffyAsks, Inc</p>
-    </footer>
 
+  <div id="new-post-form">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-11 mx-auto">
+          <!-- if .back is pressed, show orignal conent and hide the form-->
+          <h5 class="mt-5" id="back" style="cursor:pointer;"> <u>Back</u></h5>
+
+          <!-- Form to add new post-->
+          <form id="post-form" method="POST" class="mt-3" novalidate>
+            <div class="mb-3">
+              <label for="post-title" class="form-label mb-0 fw-bold">Title
+                <span class="text-danger" id="post-title-error"> </span></label>
+              <input name="post_title" type="text" class="form-control" id="post-title" required>
+            </div>
+
+            <div class="mt-3 mb-4">
+              <label for="post-body" class="fw-bold mb-1">Body <span class="text-danger" id="post-body-error">
+                </span></label>
+              <textarea name="post_content" class="form-control" style="overflow:auto;" id="post-body" rows="3" required></textarea>
+              <div class="d-flex justify-content-end align-items-end pe-3" style="height:1.2em;">
+                <span id="word-count"></span>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% if (locals.posts.length===0) { %>
+  <div id="no-post">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-5 mx-auto">
+          <h3 class="fw-bold text-center text-center" style="padding-top:10rem;"> Uh oh, looks like there
+            are
+            no
+            posts for this course. Be the first to create
+            one!</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-8 mx-auto text-center">
+          <!-- if clicked, show new post form and hide current content-->
+          <button class="btn btn-primary w-25 new-post" type="button">Create new post</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% } else { %>
+  <div id="posts">
+    <!-- card that has title and description preview at the bottom -->
+    <div class="container-fluid mt-5 mb-5">
+      <div class="row">
+        <div class="col-11 mb-3 mx-auto text-end">
+          <button class="btn btn-primary w-25 new-post" type="submit">New Post</button>
+        </div>
+      </div>
+      <% for (let post of locals.posts) { %>
+      <div class="row">
+        <div class="col-11 mx-auto">
+          <div class="card bg-primary text-white mb-3 py-3" style="height: 30vh;">
+            <div class="card-body">
+              <h4 class="card-title fw-bold text-wrap" style="padding-right: 4rem;">
+                <%= post.post_title %>
+              </h4>
+              <p class="card-text"> Posted by <%= post.op %></p>
+              <h5 class="card-text text-wrap" style="padding-right: 4rem;">
+                <!-- 70 words for preview-->
+                <%= post.post_content %>
+              </h5>
+
+              <a href = "/courses/<%= course.course_id %>/posts/<%= post.id %>" class = "btn btn-secondary mb-0" style = "position: absolute; bottom: 1rem;">Reply </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% }; %>
+    </div>
+  </div>
+  <% } %>
+
+
+  <footer class=" bg-primary mt-auto">
+    <p class="text-center text-light my-0 py-3">&copy; 2023 TuffyAsks, Inc</p>
+  </footer>
+
+  <script>
+    const posts = '<%- JSON.stringify(locals.posts) %>';
+    // get elements
+    const newPostForm = document.getElementById("new-post-form");
+    const postsDiv = document.getElementById("posts");
+    const noPostDiv = document.getElementById("no-post");
+    const newPostBtn = document.querySelector(".new-post");
+    const backBtn = document.getElementById("back");
+
+    // hide new post form
+    newPostForm.style.display = "none";
+
+    // if create new post is clicked, hide current content and show new post form
+    newPostBtn.addEventListener("click", function() {
+      if (posts.length <= 2) {
+        noPostDiv.style.display = "none";
+        newPostForm.style.display = "block";
+      } else {
+        postsDiv.style.display = "none";
+        newPostForm.style.display = "block";
+      }
+    });
+
+    // if back is clicked, hide new post form and show original content
+    backBtn.addEventListener("click", function() {
+      if (posts.length <= 2) {
+        noPostDiv.style.display = "block";
+        newPostForm.style.display = "none";
+      } else {
+        postsDiv.style.display = "block";
+        newPostForm.style.display = "none";
+      }
+    });
+
+    // handle client-side error messages
+    const postForm = document.getElementById("post-form");
+    const postTitleErr = document.getElementById("post-title-error");
+    const postTtile = document.getElementById("post-title")
+    const body = document.getElementById("post-body");
+    const bodyErr = document.getElementById("post-body-error");
+    const wordCount = document.getElementById('word-count');
+    const postTitleWordLimit = 40;
+    const bodyWordLimit = 500;
+
+    postForm.addEventListener("submit", (e) => {
+      if (!postForm.checkValidity()) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      if (!postTtile.value || postTtile.value === "") {
+        postTitleErr.innerText = "-- Please enter a title";
+        e.preventDefault();
+      } else if (postTtile.value.length > postTitleWordLimit) {
+        postTitleErr.innerText = "-- Title must be less than 40 characters";
+        e.preventDefault();
+      } else {
+        postTitleErr.innerText = "";
+      }
+
+      if (!body.value || body.value === "") {
+        bodyErr.innerText = "-- Please enter a body";
+        e.preventDefault();
+      } else if (body.value.length > bodyWordLimit) {
+        bodyErr.innerText = "-- Body must be less than 500 characters";
+        e.preventDefault();
+      } else {
+        bodyErr.innerText = "";
+      }
+
+    });
+  </script>
 </body>
 
 </html>

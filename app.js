@@ -79,6 +79,7 @@ app.get(['/', '/index'], requireLogin, (req, res) => {
     res.render('index', { errorMessage, name });
 });
 
+// end session
 app.post('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) {
@@ -89,6 +90,7 @@ app.post('/logout', (req, res) => {
     });
 });
 
+// searching for a course
 app.post(['/', '/index'], requireLogin, (req, res) => {
     const { search_course } = req.body;
     // Replace space with dash
@@ -109,6 +111,7 @@ app.post(['/', '/index'], requireLogin, (req, res) => {
 
 });
 
+// login submit
 app.post('/login', redirectLoggedIn, (req, res) => {
     const { username, password } = req.body;
 
@@ -137,6 +140,7 @@ app.post('/login', redirectLoggedIn, (req, res) => {
 
 });
 
+// register submit
 app.post('/register', redirectLoggedIn, (req, res) => {
     const { email, username, password } = req.body;
 
@@ -161,6 +165,7 @@ app.post('/register', redirectLoggedIn, (req, res) => {
     }
 });
 
+// add a course submit
 app.post('/add-a-course', requireLogin, (req, res) => {
     const { course_id, course_title, course_desc } = req.body;
     // Replace space with dash
@@ -183,6 +188,7 @@ app.post('/add-a-course', requireLogin, (req, res) => {
 });
 
 
+// course page
 app.get('/courses/:course_id', requireLogin, (req, res) => {
     const courseId = req.params.course_id;
     const courseId_no_dash = courseId.trim().replace(/-/g, ' ');
@@ -197,18 +203,101 @@ app.get('/courses/:course_id', requireLogin, (req, res) => {
             res.status(404);
             res.redirect('404-error');
         } else {
-            // Render the course page template with the course data
-            const courseData = result[0];
-            const url = `/${courseData.course_id}`;
-            res.render('course', {
-                course_id: courseId_no_dash,
-                course_title: courseData.course_title,
-                course_desc: courseData.course_desc,
-                url
+            // Look up posts for the course
+            const query = 'SELECT * FROM posts WHERE course_id = ?';
+
+            conn.query(query, courseId, (err, result2) => {
+                if (err) {
+                    console.error(err);
+                    res.status(500).send('Internal server error');
+                } else {
+                    console.log(result2)
+                    // Render the course page template with the course data
+                    res.render('course', {
+                        course: result[0],
+                        posts: result2,
+                    });
+                }
             });
         }
     });
 });
+
+// create new post page for course page
+app.post('/courses/:course_id', requireLogin, (req, res) => {
+    const courseId = req.params.course_id;
+    const courseId_no_dash = courseId.trim().replace(/-/g, ' ');
+    const op = req.session.user.username;
+    const { post_title, post_content } = req.body;
+
+    // Try to insert the new post into the database
+    const query = 'INSERT INTO posts (op, course_id, post_title, post_content) VALUES (?, ?, ?, ?)';
+    conn.query(query, [op, courseId, post_title, post_content], (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Internal server error');
+        } else {
+            res.redirect(req.originalUrl);
+        }
+    });
+});
+
+// create new reply for course page
+app.post('/courses/:course_id/posts/:post_id', requireLogin, (req, res) => {
+    const courseId = req.params.course_id;  
+    const courseId_no_dash = courseId.trim().replace(/-/g, ' ');
+    const postId = req.params.post_id;
+    const op = req.session.user.username;
+    const { reply_content } = req.body;
+
+    // Try to insert the new reply into the database
+    const query = 'INSERT INTO replies (op, reply_content, id) VALUES (?, ?, ?)';
+    conn.query(query, [op, reply_content, postId], (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Internal server error');
+        } else {
+            res.redirect(req.originalUrl);
+        }
+    });
+});
+
+
+// redirect post to its corresponding page
+app.get('/courses/:course_id/posts/:post_id', requireLogin, (req, res) => {
+    const courseId = req.params.course_id;
+    const courseId_no_dash = courseId.trim().replace(/-/g, ' ');
+    const postId = req.params.post_id;
+
+    // Look up the post in the database by its post_id, and join it with course table
+    const query = 'SELECT * FROM posts JOIN courses ON posts.course_id = courses.course_id WHERE posts.id = ? AND courses.course_id = ?';
+    conn.query(query, [postId, courseId], (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Internal server error');
+        } else if (result.length === 0) {
+            res.status(404);
+            res.redirect('404-error');
+        } else {
+
+            // retrieve replies for the post
+            const query = 'SELECT * FROM replies WHERE id = ?';
+            conn.query(query, postId, (err, result2) => {
+                if (err) {
+                    console.error(err);
+                    res.status(500).send('Internal server error');
+                } else {
+                    // Render the post page template with the post data
+                    res.render('post', {
+                        post_page: result[0],
+                        replies: result2,
+                    });
+                }
+            });
+        }
+    });
+});
+
 
 app.use((req, res) => {
     res.status(404);
