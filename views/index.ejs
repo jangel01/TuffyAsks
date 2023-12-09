@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a Course</title>
+
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
+    <link rel="/css/boostrap.min.css">
+
+    <!--No favicon-->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+
+<body class="bg-primary-bg d-flex flex-column min-vh-100">
+
+    <div class="container-fluid px-0">
+        <header class="d-flex flex-wrap justify-content-center py-3 px-4 bg-primary">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <img class="bi me-2" width="40" height="32" src="images/Tufffy-logo.png" />
+                <span class="fs-4 text-light">TuffyAsks</span>
+            </a>
+
+            <div class="col-md-3 text-end">
+                <form action="/logout" method="POST">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button class="btn btn-secondary ne-2" type="submit">Log Out</button>
+                </form>
+            </div>
+        </header>
+    </div>
+
+
+    <div class="px-4 py-5 text-center bg-hero text-light" style="min-height: 45vh;">
+        <h1 class="display-5 fw-bold mb-4" style="font-size: 6vh">Hello, <%= locals.name %>!</h1>
+        <div class="col-10 mx-auto">
+            <p class="lead mb-4" style="font-size: 2.5vh;"> Welcome to the CSUF student community forum, where you can connect with other students
+                and/or faculty to ask and answer inquires across a wide range of courses. With the easy ability to add
+                new courses and posts, our forum provides a convenient way for you to get the help you need to succeed
+                academically. All questions and answers are permanently archived for future reference, creating a
+                valuable resource for current and future CSUF students. Start by searching for your course below, or
+                adding it if it doesn't already exist.</p>
+        </div>
+    </div>
+
+    
+    <div class="container text-center mb-5" style="min-height: 45vh;">
+        <form id="search-form" method="POST" action="/" novalidate>
+            <h2 class="mt-5 mb-2 fw-normal" style="font-size: 4vh;">Search Course</h2>
+    
+            <!-- <h5 class="mb-4">Can't find your course? <a href="/add-a-course" class="text-dark">Add it! </a></h5> -->
+            <% if (locals.errorMessage) { %>
+                <h5 class="mb-2" style="font-size: 2.5vh;">Course doesn't exist? <a href="/add-a-course" class="text-dark">Add it! </a></h5>
+                <div class="my-0 text-danger" style="font-size: 2vh;">
+                    <%= locals.errorMessage %>
+                </div>
+            <% } else { %>
+                <h5 class="mb-4" style="font-size: 2.5vh;">Course doesn't exist? <a href="/add-a-course" class="text-dark">Add it! </a></h5>
+            <% } %>
+    
+            <div class="form-floating mb-4" style="font-size: 2.5vh;">
+                <input name="search_course" type="text" class="form-control" id="search-course"
+                    placeholder="Course Prefix and Number (e.g CPSC 362)">
+                <label for="search-course" id="search-label">Course Prefix and Number (e.g CPSC 362)</label>
+            </div>
+    
+            <button class="w-100 btn btn-lg btn-primary" type="submit" style="font-size: 2.5vh;">Search for Course</button>
+        </form>
+    </div>
+    
+
+    <footer class=" bg-primary mt-auto">
+        <p class="text-center text-light my-0 py-3">&copy; 2023 TuffyAsks, Inc</p>
+    </footer>
+
+    <script>
+        const searchForm = document.getElementById('search-form');
+        const search = document.getElementById('search-course');
+        const searchLabel = document.getElementById('search-label');
+
+        searchForm.addEventListener('submit', (e) => {
+            if (!searchForm.checkValidity()) {
+                e.preventDefault();
+            }
+
+            if (!search.value || search.value == '') {
+                searchLabel.innerText = 'Course Prefix and Number -- Field required';
+                searchLabel.classList.add('text-danger');
+                e.preventDefault();
+            } else {
+                searchLabel.innerText = 'Course Prefix and Number (e.g CPSC 362)';
+                searchLabel.classList.remove('text-danger');
+                input = search.value.trim().split(/\s+/);
+                if (input.length != 2) {
+                    searchLabel.innerText = 'Course Prefix and Number -- Please include both a prefix and number only';
+                    searchLabel.classList.add('text-danger');
+                    e.preventDefault();
+                } else {
+                    searchLabel.innerText = "Course Prefix and Number (e.g CPSC 362)";
+                    searchLabel.classList.remove('text-danger');
+
+                    if (input[0].length != 3 && input[0].length != 4) {
+                        searchLabel.innerText = 'Course Prefix and Number -- Prefixes can only be three or four in length';
+                        searchLabel.classList.add('text-danger');
+                        e.preventDefault();
+                    } else {
+                        searchLabel.innerText = "Course Prefix and Number (e.g CPSC 362)";
+                        searchLabel.classList.remove('text-danger');
+
+                        if (input[1].length != 2 && input[1].length != 3) {
+                            searchLabel.innerText = 'Course Prefix and Number -- Course numbers can only be two or three in length';
+                            searchLabel.classList.add('text-danger')
+                            e.preventDefault();
+                        } else {
+                            searchLabel.innerText = "Course Prefix and Number (e.g CPSC 362)";
+                            searchLabel.classList.remove('text-danger');
+                        }
+                    }
+                }
+            }
+
+        });
+    </script>
+</body>
+
+</html>

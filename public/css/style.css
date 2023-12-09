@@ -1,0 +1,42 @@
+.back {
+    margin-left: 15px;
+    content: "\00BB";
+}
+
+.break {
+    margin: 10px;
+    padding: 5px;
+    background-color: black;
+}
+
+.post {
+    background-color: #ffb703;
+    margin: 10px;
+    padding: 1em;
+    border: 3px solid black;
+}
+
+.post > .title {
+    font-size: 2em;
+}
+
+.post > .description {
+    font-size: 1em;
+}
+
+.response {
+    margin: 10px;
+    background-color: #fb8500;
+    border: 3px solid black;    
+    font-size: 1rem;
+    padding: 1em;
+}
+
+.responses > .count {
+    margin-left: 10px; 
+    font-size: 1.5em;  
+}
+
+.responses > .response > .reply {
+    padding: 5px;
+}
