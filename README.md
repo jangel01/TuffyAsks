@@ -11,7 +11,7 @@ answer to an existing question. Each registered user can also add a new course
 to the already existing course list. Questions and answers once posted cannot
 be deleted or modified.
 
-# Prerequisites for the Project:
+# Prerequisites for the Project to work:
 
 1) Node: https://nodejs.org/en
 
