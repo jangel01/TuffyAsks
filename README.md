@@ -1,5 +1,7 @@
 # Assignment Prompt
 
+CPSC 362 - Foundations of Software Engineering 
+
 An application where CSUF students can post questions and answers for
 academic purposes based on different courses. Only CSUF students should be
 able to register or login to this application (based on xxxx@csu.fullerton.edu).
@@ -9,7 +11,7 @@ answer to an existing question. Each registered user can also add a new course
 to the already existing course list. Questions and answers once posted cannot
 be deleted or modified.
 
-# Prerequisites for the project:
+# Prerequisites for the Project:
 
 1) Node: https://nodejs.org/en
 
@@ -31,7 +33,7 @@ be deleted or modified.
         - check status: ```systemctl status mysql.service``` or ```sudo systemctl status mysql```
         - turn on server: ```sudo systemctl start mysql.service``` or ```sudo systemctl start mysql```
 
-# Install packages (see package.json for reference)
+# Install Packages (see package.json for reference)
 
 ```npm install```
 
