@@ -61,7 +61,7 @@ Access website with the following URL (directed to login for now): http://localh
 
 # Screenshots
 
-(This project is not mobile responsive)
+(This project is not fully mobile responsive)
 
 ![Screenshot 2023-12-25 at 17-02-29 Sign Up](https://github.com/jangel01/TuffyAsks/assets/60250253/bfed6eea-30bf-445c-9707-f30845930427)
 ![Screenshot 2023-12-25 at 17-01-15 Sign In](https://github.com/jangel01/TuffyAsks/assets/60250253/76d12bb7-5220-4d69-825e-c7f6ebc3d834)
