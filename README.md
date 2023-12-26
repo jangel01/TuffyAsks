@@ -58,3 +58,16 @@ You can also simply copy and paste the code from tuffyasks.sql and run it direct
 ```npm run devStart ``` 
 
 Access website with the following URL (directed to login for now): http://localhost:3000/login
+
+# Screenshots
+
+(This project is not mobile responsive)
+
+![Screenshot 2023-12-25 at 17-05-57 Add a Course](https://github.com/jangel01/TuffyAsks/assets/60250253/de2f9900-2353-4aeb-9243-aed70a35b78e)
+![Screenshot 2023-12-25 at 17-05-23 Add a Course](https://github.com/jangel01/TuffyAsks/assets/60250253/b33c4662-2b66-4d33-9678-595166ffe04b)
+![Screenshot 2023-12-25 at 17-04-38 Add a Course](https://github.com/jangel01/TuffyAsks/assets/60250253/f7e45108-3968-4b80-9cb3-7d7a5469fd71)
+![Screenshot 2023-12-25 at 17-03-29 Add a Course](https://github.com/jangel01/TuffyAsks/assets/60250253/1df102bf-b96a-4b84-8970-fedb6bc2dcc0)
+![Screenshot 2023-12-25 at 17-03-10 Add a Course](https://github.com/jangel01/TuffyAsks/assets/60250253/5bedf00e-4d45-4170-bb44-fa881a8824a1)
+![Screenshot 2023-12-25 at 17-02-29 Sign Up](https://github.com/jangel01/TuffyAsks/assets/60250253/bfed6eea-30bf-445c-9707-f30845930427)
+![Screenshot 2023-12-25 at 17-01-15 Sign In](https://github.com/jangel01/TuffyAsks/assets/60250253/76d12bb7-5220-4d69-825e-c7f6ebc3d834)
+
